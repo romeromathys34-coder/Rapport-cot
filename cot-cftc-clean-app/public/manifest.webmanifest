@@ -1,0 +1,19 @@
+{
+  "name": "COT Sync",
+  "short_name": "COT Sync",
+  "description": "Site web de recherche COT avec synchronisation CFTC.",
+  "start_url": ".",
+  "scope": ".",
+  "display": "standalone",
+  "background_color": "#eef3f8",
+  "theme_color": "#081224",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "icons/cot-icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}

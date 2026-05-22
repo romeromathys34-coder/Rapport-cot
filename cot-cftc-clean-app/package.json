@@ -1,0 +1,10 @@
+{
+  "name": "cot-sync-web",
+  "version": "1.0.0",
+  "description": "Site web COT avec recherche d'actifs et synchronisation officielle CFTC",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "license": "MIT"
+}
