@@ -1,0 +1,39 @@
+name: COT Pages
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "45 21 * * 5"
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  update-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: Update CFTC data
+        run: node cot-cftc-clean-app/tools/update-static-data.js
+      - name: Commit updated CFTC data
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: "Update CFTC data"
+          file_pattern: cot-cftc-clean-app/data/reports.json cot-cftc-clean-app/public/reports-static.js
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: cot-cftc-clean-app/public
+      - uses: actions/deploy-pages@v4
