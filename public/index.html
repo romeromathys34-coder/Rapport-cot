@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>COT Sync</title>
+  <meta name="theme-color" content="#081224" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-title" content="COT Sync" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <link rel="manifest" href="manifest.webmanifest" />
+  <link rel="icon" href="icons/cot-icon.svg" />
+  <link rel="apple-touch-icon" href="icons/cot-icon.svg" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="/" aria-label="Accueil COT Sync">
+      <span class="logo">COT</span>
+      <span>
+        <strong>COT Sync</strong>
+        <small>CFTC officielle</small>
+      </span>
+    </a>
+    <div class="top-actions">
+      <span id="reportMeta" class="report-meta">Chargement du rapport...</span>
+      <button id="syncBtn" class="sync-btn" type="button">Synchroniser</button>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="hero-inner">
+        <p class="eyebrow">Recherche COT</p>
+        <h1>Entre un actif, récupère le positionnement CFTC.</h1>
+        <div class="search-card">
+          <input id="searchInput" type="text" placeholder="Gold, Bitcoin, Euro FX, Natural Gas..." autocomplete="off" autofocus />
+          <button id="clearSearchBtn" class="clear-btn hidden" type="button" aria-label="Effacer la recherche">x</button>
+        </div>
+        <div class="hero-stats">
+          <span id="assetCount">0 actifs indexés</span>
+          <span id="searchStatus">Synchronisation automatique au chargement</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="ticker" aria-label="Flux des actifs COT">
+      <div id="tickerTrack" class="ticker-track"></div>
+    </section>
+
+    <section class="content">
+      <div id="message" class="message hidden"></div>
+      <div id="assetSections"></div>
+    </section>
+  </main>
+
+  <script src="reports-static.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
