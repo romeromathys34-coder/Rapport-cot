@@ -17,7 +17,7 @@ const DATASETS = [
     reportType: 'Futures Only / Non-Commercial',
     groupUsed: 'Non-Commercial',
     formula: 'Position nette = Non-Commercial Long - Non-Commercial Short',
-    url: 'https://www.cftc.gov/dea/newcot/deafut.txt',
+    url: 'https://www.cftc.gov/files/dea/newcot/deafut.txt',,
     parser: parseLegacyRow
   },
   {
@@ -27,7 +27,7 @@ const DATASETS = [
     reportType: 'Futures Only / Managed Money',
     groupUsed: 'Managed Money',
     formula: 'Position nette = Managed Money Long - Managed Money Short',
-    url: 'https://www.cftc.gov/dea/newcot/f_disagg.txt',
+    url: 'https://www.cftc.gov/files/dea/newcot/f_disagg.txt',,
     parser: parseDisaggregatedRow
   },
   {
@@ -37,7 +37,7 @@ const DATASETS = [
     reportType: 'Futures Only / Leveraged Funds',
     groupUsed: 'Leveraged Funds',
     formula: 'Position nette = Leveraged Funds Long - Leveraged Funds Short',
-    url: 'https://www.cftc.gov/dea/newcot/FinFutWk.txt',
+    url: 'https://www.cftc.gov/files/dea/newcot/FinFutWk.txt',
     parser: parseFinancialRow
   }
 ];
