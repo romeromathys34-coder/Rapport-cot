@@ -2,12 +2,14 @@ name: COT Pages
 
 on:
   workflow_dispatch:
+  schedule:
+    - cron: "45 21 * * 5"
   push:
     branches:
       - main
 
 permissions:
-  contents: write
+  contents: read
   pages: write
   id-token: write
 
@@ -20,6 +22,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: Update CFTC data
+        run: node cot-cftc-clean-app/tools/update-static-data.js
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
         with:
