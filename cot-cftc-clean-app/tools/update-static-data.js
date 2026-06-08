@@ -8,4 +8,4 @@ syncLatestReport({ force: true, reason: 'github-pages-auto' })
   .catch(error => {
     console.error(error);
     process.exit(1);
-  });
+  }); 
