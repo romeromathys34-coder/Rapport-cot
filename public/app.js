@@ -5,10 +5,9 @@ const els = {
   syncBtn: document.getElementById('syncBtn'),
   reportMeta: document.getElementById('reportMeta'),
   message: document.getElementById('message'),
-  assetCount: document.getElementById('assetCount'),
   searchInput: document.getElementById('searchInput'),
   clearSearchBtn: document.getElementById('clearSearchBtn'),
-  searchStatus: document.getElementById('searchStatus'),
+  hero: document.querySelector('.hero'),
   tickerTrack: document.getElementById('tickerTrack'),
   assetSections: document.getElementById('assetSections')
 };
@@ -23,6 +22,11 @@ els.clearSearchBtn.addEventListener('click', () => {
   state.query = '';
   renderAssets();
   els.searchInput.focus();
+});
+window.addEventListener('pointermove', event => {
+  if (!els.hero) return;
+  els.hero.style.setProperty('--pointer-x', `${Math.round((event.clientX / window.innerWidth) * 100)}%`);
+  els.hero.style.setProperty('--pointer-y', `${Math.round((event.clientY / window.innerHeight) * 100)}%`);
 });
 
 loadReports();
@@ -96,16 +100,13 @@ async function syncCFTC() {
 function render() {
   const report = state.selected;
   if (!report) {
-    els.reportMeta.textContent = 'Aucun rapport chargé';
-    els.assetCount.textContent = '0 actif indexé';
-    els.searchStatus.textContent = 'Clique sur Synchroniser';
+    els.reportMeta.textContent = 'Aucun rapport';
     els.tickerTrack.innerHTML = '';
-    els.assetSections.innerHTML = emptyHtml('Aucune donnée', 'Synchronise le site pour charger le dernier rapport CFTC.');
+    els.assetSections.innerHTML = '';
     return;
   }
 
-  els.reportMeta.textContent = report.reportDate || report.reportDateRaw || 'Rapport CFTC';
-  els.assetCount.textContent = `${format(report.assets.length)} lignes CFTC`;
+  els.reportMeta.textContent = formatReportMeta(report);
   renderTicker(report.assets || []);
   renderAssets();
 }
@@ -117,18 +118,13 @@ function renderAssets() {
   els.clearSearchBtn.classList.toggle('hidden', !state.query);
 
   if (!state.query) {
-    els.searchStatus.textContent = 'Tape un actif pour voir les données';
-    els.assetSections.innerHTML = emptyHtml('Prêt à chercher', 'Exemples : Gold, Silver, Bitcoin, Euro FX, Corn, Natural Gas.');
+    els.assetSections.innerHTML = '';
     return;
   }
 
   const queryTerms = expandQuery(state.query);
   const rawAssets = sortMatches(filterAssets(report.assets || [], queryTerms), queryTerms);
   const assets = bestAssetPerMarket(rawAssets);
-
-  els.searchStatus.textContent = assets.length
-    ? `Résultat pour "${escapeHtml(els.searchInput.value)}"`
-    : `Aucun résultat pour "${escapeHtml(els.searchInput.value)}"`;
 
   els.assetSections.innerHTML = assets.length
     ? `<section class="results-grid">${assets.map(cardHtml).join('')}</section>`
@@ -273,6 +269,14 @@ function hideMessage() {
 
 function format(value) {
   return new Intl.NumberFormat('fr-FR').format(Number(value || 0));
+}
+
+function formatReportMeta(report) {
+  const raw = report.reportDateRaw || report.reportDate;
+  if (!raw) return 'Rapport CFTC';
+  const date = new Date(raw);
+  if (Number.isNaN(date.getTime())) return String(raw).split('T')[0] || 'Rapport CFTC';
+  return `Rapport du ${date.toLocaleDateString('fr-FR', { timeZone: 'UTC', day: 'numeric', month: 'long', year: 'numeric' })}`;
 }
 
 function escapeHtml(value) {

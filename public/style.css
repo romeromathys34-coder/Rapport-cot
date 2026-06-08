@@ -16,7 +16,7 @@
 
 body {
   margin: 0;
-  background: var(--bg);
+  background: linear-gradient(180deg, #eef3f8 0%, #f7fafc 46%, #edf4f1 100%);
   color: var(--ink);
   font-family: Inter, Arial, Helvetica, sans-serif;
 }
@@ -27,7 +27,7 @@ a { color: inherit; }
 
 .topbar {
   align-items: center;
-  background: rgba(255,255,255,.92);
+  background: rgba(255,255,255,.9);
   border-bottom: 1px solid var(--line);
   display: flex;
   gap: 18px;
@@ -38,6 +38,7 @@ a { color: inherit; }
   top: 0;
   z-index: 20;
   backdrop-filter: blur(14px);
+  box-shadow: 0 10px 34px rgba(8,18,36,.06);
 }
 
 .brand {
@@ -82,7 +83,7 @@ a { color: inherit; }
 }
 
 .report-meta {
-  background: white;
+  background: #f8fbff;
   border: 1px solid var(--line);
   border-radius: 999px;
   color: #263852;
@@ -93,13 +94,14 @@ a { color: inherit; }
 
 .sync-btn {
   background: #8ee3ad;
-  border: 0;
+  border: 2px solid #07152b;
   border-radius: 999px;
   color: var(--navy);
   cursor: pointer;
   font-size: 14px;
   font-weight: 900;
   padding: 12px 18px;
+  box-shadow: 0 8px 18px rgba(15,139,76,.18);
 }
 
 .sync-btn:disabled {
@@ -108,15 +110,49 @@ a { color: inherit; }
 }
 
 .hero {
-  background: var(--navy);
+  --pointer-x: 50%;
+  --pointer-y: 35%;
+  background:
+    radial-gradient(circle at var(--pointer-x) var(--pointer-y), rgba(142,227,173,.24), rgba(142,227,173,0) 32%),
+    linear-gradient(135deg, rgba(255,255,255,.055) 0 1px, transparent 1px 18px),
+    linear-gradient(160deg, #081224 0%, #0b1426 46%, #06101f 100%);
   color: white;
+  overflow: hidden;
   padding: 58px 22px 62px;
+  position: relative;
+}
+
+.hero::before {
+  animation: heroDrift 18s ease-in-out infinite alternate;
+  background:
+    linear-gradient(90deg, rgba(142,227,173,.18), transparent 28%, rgba(114,165,255,.12) 68%, transparent),
+    repeating-linear-gradient(90deg, rgba(255,255,255,.04) 0 1px, transparent 1px 74px);
+  content: "";
+  inset: -35%;
+  opacity: .8;
+  pointer-events: none;
+  position: absolute;
+}
+
+.hero::after {
+  animation: scanLine 9s linear infinite;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,.11), transparent);
+  content: "";
+  height: 160%;
+  left: -30%;
+  pointer-events: none;
+  position: absolute;
+  top: -30%;
+  transform: rotate(18deg);
+  width: 24%;
 }
 
 .hero-inner {
   margin: 0 auto;
   max-width: 980px;
+  position: relative;
   text-align: center;
+  z-index: 1;
 }
 
 .eyebrow {
@@ -138,13 +174,20 @@ a { color: inherit; }
 .search-card {
   align-items: center;
   background: white;
+  border: 1px solid rgba(255,255,255,.72);
   border-radius: 24px;
-  box-shadow: 0 22px 60px rgba(0,0,0,.25);
+  box-shadow: 0 28px 70px rgba(0,0,0,.32), inset 0 0 0 1px rgba(8,18,36,.04);
   display: flex;
   gap: 8px;
   margin: 0 auto;
   max-width: 760px;
   padding: 8px;
+  transition: transform .2s ease, box-shadow .2s ease;
+}
+
+.search-card:focus-within {
+  box-shadow: 0 34px 86px rgba(0,0,0,.38), 0 0 0 5px rgba(142,227,173,.18);
+  transform: translateY(-2px);
 }
 
 #searchInput {
@@ -184,25 +227,6 @@ a { color: inherit; }
   justify-content: center;
 }
 
-.hero-stats {
-  align-items: center;
-  color: #c9d6e8;
-  display: flex;
-  flex-wrap: wrap;
-  font-size: 14px;
-  font-weight: 900;
-  gap: 10px;
-  justify-content: center;
-  margin-top: 18px;
-}
-
-.hero-stats span {
-  background: rgba(255,255,255,.1);
-  border: 1px solid rgba(255,255,255,.12);
-  border-radius: 999px;
-  padding: 9px 13px;
-}
-
 .ticker {
   background: #050b16;
   height: 62px;
@@ -233,7 +257,7 @@ a { color: inherit; }
 
 .ticker-track {
   align-items: center;
-  animation: tickerMove 120s linear infinite;
+  animation: tickerMove 260s linear infinite;
   display: flex;
   min-width: max-content;
   height: 100%;
@@ -285,6 +309,16 @@ a { color: inherit; }
 @keyframes tickerMove {
   from { transform: translateX(0); }
   to { transform: translateX(-50%); }
+}
+
+@keyframes heroDrift {
+  from { transform: translate3d(-2%, -1%, 0) rotate(0deg); }
+  to { transform: translate3d(3%, 2%, 0) rotate(2deg); }
+}
+
+@keyframes scanLine {
+  from { transform: translateX(-80vw) rotate(18deg); }
+  to { transform: translateX(160vw) rotate(18deg); }
 }
 
 .content {

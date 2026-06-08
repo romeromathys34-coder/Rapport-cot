@@ -1,4 +1,4 @@
-const CACHE_NAME = 'cot-sync-web-v2';
+const CACHE_NAME = 'cot-sync-web-v3';
 const APP_FILES = [
   './',
   './index.html',
