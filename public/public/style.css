@@ -261,7 +261,7 @@ a { color: inherit; }
 
 .ticker-track {
   align-items: center;
-  animation: tickerMove 420s linear infinite;
+  animation: tickerMove 260s linear infinite;
   display: flex;
   min-width: max-content;
   height: 100%;
