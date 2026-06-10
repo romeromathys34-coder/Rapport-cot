@@ -191,7 +191,26 @@ function buildTickerAssets(assets) {
     const current = grouped.get(key);
     if (!current || reportPriority(asset) < reportPriority(current)) grouped.set(key, asset);
   }
-  return Array.from(grouped.values()).sort((a, b) => a.name.localeCompare(b.name));
+  return interleaveTickerAssets(Array.from(grouped.values()));
+}
+
+function interleaveTickerAssets(assets) {
+  const buckets = new Map();
+  for (const asset of assets) {
+    const key = `${asset.category || 'Autres'}-${asset.score > 0 ? 'up' : asset.score < 0 ? 'down' : 'flat'}`;
+    if (!buckets.has(key)) buckets.set(key, []);
+    buckets.get(key).push(asset);
+  }
+
+  const groups = Array.from(buckets.values()).map(group => group.sort((a, b) => a.name.localeCompare(b.name)));
+  const mixed = [];
+  while (groups.some(group => group.length)) {
+    for (const group of groups) {
+      const next = group.shift();
+      if (next) mixed.push(next);
+    }
+  }
+  return mixed;
 }
 
 function reportPriority(asset) {
