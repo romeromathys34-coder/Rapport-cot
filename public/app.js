@@ -195,11 +195,12 @@ function buildTickerAssets(assets) {
 }
 
 function reportPriority(asset) {
-  if (asset.reportFamily === 'Current Disaggregated Reports' && ['Metaux', 'Energie', 'Agriculture'].includes(asset.category)) return 0;
-  if (asset.reportFamily === 'Current Traders in Financial Futures Reports' && ['Devises', 'Taux', 'Indices', 'Cryptomonnaies'].includes(asset.category)) return 0;
-  if (asset.reportFamily === 'Current Disaggregated Reports') return 1;
-  if (asset.reportFamily === 'Current Traders in Financial Futures Reports') return 2;
-  return 3;
+  if (['Cryptomonnaies', 'Indices'].includes(asset.category) && asset.reportFamily === 'Current Legacy Reports') return 0;
+  if (['Metaux', 'Energie'].includes(asset.category) && asset.reportFamily === 'Current Disaggregated Reports') return 0;
+  if (asset.reportFamily === 'Current Legacy Reports') return 1;
+  if (asset.reportFamily === 'Current Disaggregated Reports') return 2;
+  if (asset.reportFamily === 'Current Traders in Financial Futures Reports') return 3;
+  return 4;
 }
 
 function rankMatch(name, queryTerms) {
