@@ -93,44 +93,25 @@ a { color: inherit; }
   padding: 10px 14px;
 }
 
-.sync-btn {
-  background: #8ee3ad;
-  border: 2px solid #07152b;
-  border-radius: 999px;
-  color: var(--navy);
-  cursor: pointer;
-  font-size: 14px;
-  font-weight: 900;
-  padding: 12px 18px;
-  box-shadow: 0 8px 18px rgba(15,139,76,.18);
-}
-
-.sync-btn:disabled {
-  cursor: wait;
-  opacity: .68;
-}
-
 .hero {
   --pointer-x: 50%;
   --pointer-y: 35%;
   background:
     radial-gradient(circle at var(--pointer-x) var(--pointer-y), rgba(142,227,173,.24), rgba(142,227,173,0) 32%),
-    linear-gradient(135deg, rgba(255,255,255,.055) 0 1px, transparent 1px 18px),
     linear-gradient(160deg, #081224 0%, #0b1426 46%, #06101f 100%);
   color: white;
   overflow: hidden;
   align-items: center;
   display: flex;
-  min-height: calc(100vh - 140px);
-  padding: 86px 22px 96px;
+  min-height: 560px;
+  padding: 64px 22px 118px;
   position: relative;
 }
 
 .hero::before {
   animation: heroDrift 18s ease-in-out infinite alternate;
   background:
-    linear-gradient(90deg, rgba(142,227,173,.18), transparent 28%, rgba(114,165,255,.12) 68%, transparent),
-    repeating-linear-gradient(90deg, rgba(255,255,255,.04) 0 1px, transparent 1px 74px);
+    linear-gradient(90deg, rgba(142,227,173,.14), transparent 30%, rgba(114,165,255,.1) 72%, transparent);
   content: "";
   inset: -35%;
   opacity: .8;
@@ -173,6 +154,17 @@ a { color: inherit; }
   line-height: 1.02;
   margin: 0 auto 28px;
   max-width: 860px;
+}
+
+.is-searching .hero {
+  align-items: flex-start;
+  min-height: calc(100vh - 78px);
+  padding-top: 38px;
+}
+
+.is-searching .hero h1 {
+  font-size: clamp(30px, 4vw, 52px);
+  margin-bottom: 18px;
 }
 
 .search-card {
@@ -238,6 +230,16 @@ a { color: inherit; }
   overflow: hidden;
   position: relative;
   z-index: 4;
+}
+
+.inline-results {
+  margin: 20px auto 0;
+  max-width: 760px;
+  text-align: left;
+}
+
+.inline-results:empty {
+  display: none;
 }
 
 .ticker::before,
@@ -396,8 +398,8 @@ a { color: inherit; }
 .results-grid {
   display: grid;
   gap: 18px;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  padding-top: 28px;
+  grid-template-columns: 1fr;
+  padding-top: 0;
 }
 
 .result-card {
@@ -511,7 +513,8 @@ a { color: inherit; }
   }
 
   .hero {
-    padding: 42px 16px 46px;
+    min-height: 500px;
+    padding: 42px 16px 96px;
   }
 
   .search-card {

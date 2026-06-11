@@ -3,7 +3,6 @@ const staticSite = location.protocol === 'file:' || location.hostname.endsWith('
 let messageTimer = null;
 
 const els = {
-  syncBtn: document.getElementById('syncBtn'),
   reportMeta: document.getElementById('reportMeta'),
   message: document.getElementById('message'),
   searchInput: document.getElementById('searchInput'),
@@ -13,7 +12,6 @@ const els = {
   assetSections: document.getElementById('assetSections')
 };
 
-els.syncBtn.addEventListener('click', syncCFTC);
 els.searchInput.addEventListener('input', () => {
   state.query = normalizeSearch(els.searchInput.value);
   renderAssets();
@@ -32,7 +30,6 @@ window.addEventListener('pointermove', event => {
 
 loadReports();
 setInterval(loadReports, 15 * 60 * 1000);
-if (staticSite) els.syncBtn.textContent = 'Actualiser';
 
 if ('serviceWorker' in navigator) {
   navigator.serviceWorker.register('service-worker.js').catch(() => {});
@@ -69,35 +66,6 @@ async function fetchReportsWithFallback() {
   }
 }
 
-async function syncCFTC() {
-  if (staticSite) {
-    await loadReports();
-    showMessage('Données actualisées', 'ok');
-    return;
-  }
-
-  els.syncBtn.disabled = true;
-  els.syncBtn.textContent = 'Synchronisation...';
-  showMessage('Connexion à la CFTC en cours...', 'ok');
-
-  try {
-    const response = await fetch('/api/sync', { method: 'POST' });
-    const data = await response.json();
-    if (!response.ok || !data.ok) throw new Error(data.error || 'Synchronisation impossible');
-
-    state.reports = data.reports || [];
-    state.selected = data.report || state.reports[0] || null;
-    hideMessage();
-    render();
-    showMessage('Rapport CFTC synchronisé.', 'ok');
-  } catch (error) {
-    showMessage(error.message, 'err');
-  } finally {
-    els.syncBtn.disabled = false;
-    els.syncBtn.textContent = 'Synchroniser';
-  }
-}
-
 function render() {
   const report = state.selected;
   if (!report) {
@@ -119,9 +87,11 @@ function renderAssets() {
   els.clearSearchBtn.classList.toggle('hidden', !state.query);
 
   if (!state.query) {
+    document.body.classList.remove('is-searching');
     els.assetSections.innerHTML = '';
     return;
   }
+  document.body.classList.add('is-searching');
 
   const queryTerms = expandQuery(state.query);
   const rawAssets = sortMatches(filterAssets(report.assets || [], queryTerms), queryTerms);
