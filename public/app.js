@@ -271,8 +271,15 @@ function format(value) {
 function formatReportMeta(report) {
   const raw = report.reportDateRaw || report.reportDate;
   if (!raw) return 'Rapport CFTC';
-  const date = new Date(raw);
-  if (Number.isNaN(date.getTime())) return String(raw).split('T')[0] || 'Rapport CFTC';
+  const rawText = String(raw).trim();
+  const isoDate = rawText.match(/^(\d{4})-(\d{2})-(\d{2})/);
+  if (isoDate) {
+    const date = new Date(Date.UTC(Number(isoDate[1]), Number(isoDate[2]) - 1, Number(isoDate[3])));
+    return `Rapport du ${date.toLocaleDateString('fr-FR', { timeZone: 'UTC', day: 'numeric', month: 'long', year: 'numeric' })}`;
+  }
+  if (/^\d{1,2}\s+\S+\s+\d{4}$/i.test(rawText)) return `Rapport du ${rawText}`;
+  const date = new Date(rawText);
+  if (Number.isNaN(date.getTime())) return rawText.split('T')[0] || 'Rapport CFTC';
   return `Rapport du ${date.toLocaleDateString('fr-FR', { timeZone: 'UTC', day: 'numeric', month: 'long', year: 'numeric' })}`;
 }
 

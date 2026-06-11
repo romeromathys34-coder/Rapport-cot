@@ -104,7 +104,7 @@ a { color: inherit; }
   align-items: center;
   display: flex;
   min-height: 560px;
-  padding: 64px 22px 118px;
+  padding: 54px 22px 92px;
   position: relative;
 }
 
@@ -120,16 +120,7 @@ a { color: inherit; }
 }
 
 .hero::after {
-  animation: scanLine 9s linear infinite;
-  background: linear-gradient(90deg, transparent, rgba(255,255,255,.11), transparent);
-  content: "";
-  height: 160%;
-  left: -30%;
-  pointer-events: none;
-  position: absolute;
-  top: -30%;
-  transform: rotate(18deg);
-  width: 24%;
+  content: none;
 }
 
 .hero-inner {
@@ -159,7 +150,7 @@ a { color: inherit; }
 .is-searching .hero {
   align-items: flex-start;
   min-height: calc(100vh - 78px);
-  padding-top: 38px;
+  padding-top: 28px;
 }
 
 .is-searching .hero h1 {
@@ -224,9 +215,13 @@ a { color: inherit; }
 }
 
 .ticker {
-  background: #050b16;
+  background: rgba(5, 11, 22, .72);
+  border: 1px solid rgba(255,255,255,.08);
+  border-radius: 999px;
+  box-shadow: 0 18px 48px rgba(0,0,0,.24);
   height: 86px;
-  margin-top: -86px;
+  margin: 0 auto 32px;
+  max-width: min(1180px, calc(100vw - 44px));
   overflow: hidden;
   position: relative;
   z-index: 4;
@@ -254,12 +249,12 @@ a { color: inherit; }
 }
 
 .ticker::before {
-  background: linear-gradient(90deg, #050b16, rgba(5,11,22,0));
+  background: linear-gradient(90deg, rgba(5,11,22,.98), rgba(5,11,22,0));
   left: 0;
 }
 
 .ticker::after {
-  background: linear-gradient(270deg, #050b16, rgba(5,11,22,0));
+  background: linear-gradient(270deg, rgba(5,11,22,.98), rgba(5,11,22,0));
   right: 0;
 }
 
@@ -407,6 +402,7 @@ a { color: inherit; }
   border: 1px solid var(--line);
   border-radius: 22px;
   box-shadow: 0 12px 30px rgba(8,18,36,.05);
+  color: var(--ink);
   padding: 18px;
 }
 
@@ -421,6 +417,7 @@ a { color: inherit; }
 }
 
 .card-head h2 {
+  color: var(--ink);
   font-size: 26px;
   line-height: 1.05;
   margin: 0;
@@ -471,6 +468,7 @@ a { color: inherit; }
 }
 
 .metric strong {
+  color: var(--ink);
   display: block;
   font-size: 15px;
   font-weight: 900;
@@ -514,7 +512,7 @@ a { color: inherit; }
 
   .hero {
     min-height: 500px;
-    padding: 42px 16px 96px;
+    padding: 30px 16px 72px;
   }
 
   .search-card {
@@ -533,7 +531,8 @@ a { color: inherit; }
 
   .ticker {
     height: 70px;
-    margin-top: -70px;
+    margin-bottom: 24px;
+    max-width: calc(100vw - 24px);
   }
 
   .results-grid {
