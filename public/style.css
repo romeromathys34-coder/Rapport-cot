@@ -104,7 +104,7 @@ a { color: inherit; }
   overflow: hidden;
   align-items: center;
   display: flex;
-  min-height: 560px;
+  min-height: calc(100vh - 78px);
   padding: 54px 22px 92px;
   position: relative;
 }
@@ -254,23 +254,15 @@ a { color: inherit; }
 
 .ticker::before,
 .ticker::after {
-  content: "";
-  height: 100%;
-  pointer-events: none;
-  position: absolute;
-  top: 0;
-  width: 80px;
-  z-index: 2;
+  content: none;
 }
 
 .ticker::before {
-  background: linear-gradient(90deg, rgba(8,18,36,.95), rgba(8,18,36,0));
-  left: 0;
+  background: none;
 }
 
 .ticker::after {
-  background: linear-gradient(270deg, rgba(8,18,36,.95), rgba(8,18,36,0));
-  right: 0;
+  background: none;
 }
 
 .ticker-track {
@@ -351,7 +343,7 @@ a { color: inherit; }
   margin: 0 auto;
   max-width: 1120px;
   min-height: 0;
-  padding: 0 20px 70px;
+  padding: 0;
   position: relative;
   z-index: 3;
 }
