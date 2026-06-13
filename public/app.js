@@ -22,12 +22,6 @@ els.clearSearchBtn.addEventListener('click', () => {
   renderAssets();
   els.searchInput.focus();
 });
-window.addEventListener('pointermove', event => {
-  if (!els.hero) return;
-  els.hero.style.setProperty('--pointer-x', `${Math.round((event.clientX / window.innerWidth) * 100)}%`);
-  els.hero.style.setProperty('--pointer-y', `${Math.round((event.clientY / window.innerHeight) * 100)}%`);
-});
-
 loadReports();
 setInterval(loadReports, 15 * 60 * 1000);
 
