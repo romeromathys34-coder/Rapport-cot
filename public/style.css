@@ -20,6 +20,28 @@ body {
   color: var(--ink);
   font-family: Inter, Arial, Helvetica, sans-serif;
   min-height: 100vh;
+  overflow-x: hidden;
+  position: relative;
+}
+
+body::before {
+  animation: pageAmbient 24s ease-in-out infinite alternate;
+  background:
+    radial-gradient(circle at 14% 24%, rgba(98, 214, 169, .26), transparent 34%),
+    radial-gradient(circle at 88% 16%, rgba(76, 119, 255, .18), transparent 32%),
+    radial-gradient(circle at 52% 82%, rgba(24, 62, 118, .34), transparent 42%),
+    linear-gradient(155deg, #081224 0%, #0c1a31 48%, #06101f 100%);
+  background-size: 135% 135%, 145% 145%, 130% 130%, 100% 100%;
+  content: "";
+  inset: 0;
+  pointer-events: none;
+  position: fixed;
+  z-index: 0;
+}
+
+body > * {
+  position: relative;
+  z-index: 1;
 }
 
 a { color: inherit; }
@@ -94,12 +116,7 @@ a { color: inherit; }
 }
 
 .hero {
-  background:
-    radial-gradient(circle at 16% 28%, rgba(98, 214, 169, .2), transparent 34%),
-    radial-gradient(circle at 86% 18%, rgba(76, 119, 255, .16), transparent 30%),
-    linear-gradient(155deg, #081224 0%, #0d1b33 47%, #06101f 100%);
-  background-size: 130% 130%, 140% 140%, 100% 100%;
-  animation: heroAmbient 20s ease-in-out infinite alternate;
+  background: transparent;
   color: white;
   overflow: hidden;
   align-items: center;
@@ -110,29 +127,11 @@ a { color: inherit; }
 }
 
 .hero::before {
-  animation: auroraFlow 24s ease-in-out infinite alternate;
-  background:
-    radial-gradient(ellipse at 18% 38%, rgba(142,227,173,.28), transparent 28%),
-    radial-gradient(ellipse at 72% 22%, rgba(109,155,255,.22), transparent 32%),
-    radial-gradient(ellipse at 54% 86%, rgba(16,185,129,.12), transparent 30%);
-  content: "";
-  inset: -35%;
-  filter: blur(18px);
-  opacity: .86;
-  pointer-events: none;
-  position: absolute;
+  content: none;
 }
 
 .hero::after {
-  animation: depthGlow 18s ease-in-out infinite alternate;
-  background:
-    radial-gradient(ellipse at center, rgba(255,255,255,.08), transparent 48%);
-  content: "";
-  inset: 10% 18%;
-  opacity: .42;
-  pointer-events: none;
-  position: absolute;
-  transform: translate3d(0, 0, 0);
+  content: none;
 }
 
 .hero-inner {
@@ -322,21 +321,10 @@ a { color: inherit; }
   to { transform: translateX(-50%); }
 }
 
-@keyframes heroAmbient {
+@keyframes pageAmbient {
   0% { background-position: 0% 44%, 100% 24%, center; }
   50% { background-position: 42% 20%, 56% 60%, center; }
   100% { background-position: 78% 58%, 8% 36%, center; }
-}
-
-@keyframes auroraFlow {
-  0% { transform: translate3d(-4%, -2%, 0) rotate(-2deg) scale(1); }
-  50% { transform: translate3d(3%, 2%, 0) rotate(1deg) scale(1.04); }
-  100% { transform: translate3d(6%, -1%, 0) rotate(3deg) scale(1.08); }
-}
-
-@keyframes depthGlow {
-  from { opacity: .24; transform: translate3d(-4%, 2%, 0) scale(.92); }
-  to { opacity: .5; transform: translate3d(4%, -3%, 0) scale(1.08); }
 }
 
 .content {
