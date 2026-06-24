@@ -25,10 +25,6 @@ els.clearSearchBtn.addEventListener('click', () => {
 loadReports();
 setInterval(loadReports, 15 * 60 * 1000);
 
-if ('serviceWorker' in navigator) {
-  navigator.serviceWorker.register('service-worker.js').catch(() => {});
-}
-
 async function loadReports() {
   try {
     const data = await fetchReportsWithFallback();
